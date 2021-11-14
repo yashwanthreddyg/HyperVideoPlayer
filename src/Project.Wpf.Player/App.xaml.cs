@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Project.Wpf.Author
+namespace Project.Wpf.Player
 {
     /// <summary>
     /// Interaction logic for App.xaml
