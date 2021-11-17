@@ -5,7 +5,7 @@ namespace Project.Core
     public interface IMetadata
     {
         List<Box> GetBoxesForFrame(uint frameNumber);
-        List<MediaLink> GetMediaLinks();
+        IReadOnlyCollection<MediaLink> GetMediaLinks();
         MediaLink GetMediaLink(Guid linkId);
         Guid AddMediaLink(MediaLink link);
         void RemoveMediaLink(Guid linkId);

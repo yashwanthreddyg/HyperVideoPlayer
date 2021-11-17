@@ -11,10 +11,18 @@ namespace Project.Core.Models
     /// </summary>
     public class Box
     {
-        uint X { get; set; }
-        uint Y { get; set; }
-        uint Width { get; set; }
-        uint Height { get; set; }
-        MediaLink MediaLink { get; set; }
+        public Box(uint x, uint y, uint width, uint height, MediaLink link)
+        {
+            this.X = x;
+            this.Y = y;
+            this.Width = width;
+            this.Height = height;
+            this.MediaLink = link;
+        }
+        public uint X { get; }
+        public uint Y { get; }
+        public uint Width { get; }
+        public uint Height { get; }
+        public MediaLink MediaLink { get; }
     }
 }

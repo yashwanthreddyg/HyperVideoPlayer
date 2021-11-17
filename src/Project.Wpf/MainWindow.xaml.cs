@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Project.Core;
+using Project.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,13 @@ namespace Project.Wpf.Author
         public MainWindow()
         {
             InitializeComponent();
+            IMetadata metadata = MediaManager.GetMetadataFor("D:/gitwork/CSCI_576_Project/data/London/LondonOne");
+            //metadata.AddMediaLink(new Core.Models.MediaLink
+            //{
+            //    FromX = 67
+            //});
+            metadata.RemoveMediaLink(Guid.Parse("97e443ed-a55e-473f-a27c-afbc5effb05c"));
+            metadata.Save();
         }
     }
 }

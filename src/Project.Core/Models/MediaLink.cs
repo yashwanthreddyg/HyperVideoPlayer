@@ -12,17 +12,37 @@ namespace Project.Core.Models
     /// </summary>
     public class MediaLink
     {
-        Guid Id { get; set; }
-        uint FromFrame { get; set; }
-        uint ToFrame { get; set; }
-        uint FromX { get; set; }
-        uint FromY { get; set; }
-        uint ToX { get; set; }
-        uint ToY { get; set; }
-        String ToVideo { get; set; }
-        uint InitialHeight { get; set; }
-        uint InitialWidth { get; set; }
-        uint FinalHeight { get; set; }
-        uint FinalWidth { get; set; }
+        public MediaLink(uint fromFrame, uint toFrame,
+            uint fromX, uint toX,
+            uint fromY, uint toY,
+            uint initialHeight, uint finalHeight,
+            uint initialWidth, uint finalWidth,
+            String toVideo)
+        {
+            this.Id = Guid.NewGuid();
+            this.FromFrame = fromFrame;
+            this.ToFrame = toFrame;
+            this.FromX = fromX;
+            this.ToX = toX;
+            this.FromY = fromY;
+            this.ToY = toY;
+            this.InitialWidth = initialWidth;
+            this.FinalWidth = finalWidth;
+            this.InitialHeight = initialHeight;
+            this.FinalHeight = finalHeight;
+            this.ToVideo = toVideo;
+        }
+        public Guid Id { get; internal set; }
+        public uint FromFrame { get; }
+        public uint ToFrame { get; }
+        public uint FromX { get; }
+        public uint FromY { get; }
+        public uint ToX { get; }
+        public uint ToY { get; }
+        public uint InitialHeight { get; }
+        public uint InitialWidth { get; }
+        public uint FinalHeight { get; }
+        public uint FinalWidth { get; }
+        public String ToVideo { get; }
     }
 }

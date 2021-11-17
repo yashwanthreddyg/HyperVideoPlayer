@@ -8,9 +8,9 @@ namespace Project.Core
 {
     public class MediaManager
     {
-        IMetadata GetMetadataFor(String videoFileName)
+        public static IMetadata GetMetadataFor(String videoFilePath)
         {
-            return new DefaultMetadataImpl(videoFileName);
+            return new DefaultMetadataImpl(videoFilePath);
         }
     }
 }
