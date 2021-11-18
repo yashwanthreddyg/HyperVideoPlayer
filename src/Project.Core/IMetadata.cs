@@ -1,4 +1,5 @@
 ﻿using Project.Core.Models;
+using System.Drawing;
 
 namespace Project.Core
 {
@@ -8,6 +9,8 @@ namespace Project.Core
         IReadOnlyCollection<MediaLink> GetMediaLinks();
         MediaLink GetMediaLink(Guid linkId);
         Guid AddMediaLink(MediaLink link);
+        uint GetFrameCount();
+        object GetBitmapImageForFrame(uint frameNumber);
         void RemoveMediaLink(Guid linkId);
         void Save();
     }

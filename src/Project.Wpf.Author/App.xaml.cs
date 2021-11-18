@@ -1,15 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.Extensions.Logging;
-using Serilog.Extensions.Logging;
 using Serilog;
+using Project.Core;
+using System.Drawing;
+using System.IO;
+using System.Windows.Media.Imaging;
+using System.Drawing.Imaging;
 
 namespace Project.Wpf.Author
 {
@@ -32,11 +30,26 @@ namespace Project.Wpf.Author
                        .ConfigureServices((context, services) =>
                        {
                            services.AddSingleton<MainWindow>();
+                           services.AddSingleton<Func<Bitmap, object>>((Bitmap bmp) =>
+                           {
+                               using (MemoryStream memory = new MemoryStream())
+                               {
+                                   bmp.Save(memory, ImageFormat.Bmp);
+                                   memory.Position = 0;
+                                   BitmapImage bitmapImage = new BitmapImage();
+                                   bitmapImage.BeginInit();
+                                   bitmapImage.StreamSource = memory;
+                                   bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                                   bitmapImage.EndInit();
+                                   return bitmapImage;
+                               }
+                           });
+                           services.AddSingleton<MediaManager>();
                            services.AddLogging(loggingBuilder =>
                            {
                                loggingBuilder.AddSerilog(dispose: true);
                            });
-                           ;
+
                        })
                        .Build();
         }

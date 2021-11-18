@@ -23,12 +23,14 @@ namespace Project.Wpf.Author
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(ILogger<MainWindow> logger)
+        public MainWindow(ILogger<MainWindow> logger, MediaManager mediaManager)
         {
             InitializeComponent();
-            IMetadata metadata = MediaManager.GetMetadataFor("D:/gitwork/CSCI_576_Project/data/London/LondonOne");
+            IMetadata metadata = mediaManager.GetMetadataFor("D:/gitwork/CSCI_576_Project/data/London/LondonOne");
             logger.LogDebug("in constructor");
             metadata.RemoveMediaLink(Guid.Parse("429b42fe-4a1e-448a-aa26-13ff6494ea08"));
+            metadata.Save();
+            BitmapImage bi = (BitmapImage)metadata.GetBitmapImageForFrame(1);
             metadata.Save();
         }
     }

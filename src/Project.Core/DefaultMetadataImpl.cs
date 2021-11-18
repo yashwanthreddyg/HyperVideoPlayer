@@ -1,6 +1,8 @@
-﻿using Project.Core.Models;
+﻿using Microsoft.Extensions.Logging;
+using Project.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -10,24 +12,39 @@ namespace Project.Core
 {
     internal class DefaultMetadataImpl : IMetadata
     {
+
+        private readonly uint FRAME_WIDTH = 352;
+        private readonly uint FRAME_HEIGHT = 288;
+
         List<MediaLink> _links;
 
         string _videoPath;
+        string _videoName;
         string _audioFileName;
         string _audioPath;
         string _metadataFilePath;
+        ILogger _logger;
         IDictionary<uint, ISet<Guid>> _frameGuidMap;
+        IDictionary<uint, object> _frameBitmapImageMap;
+        string[] _frameFilePaths;
+        uint _frameCount = 0;
+        Func<Bitmap, object> _bitmapToBitmapImageConverter;
 
         Dictionary<Guid, MediaLink> _mediaLinkMap;
 
-        public DefaultMetadataImpl(string videoFilePath)
+        public DefaultMetadataImpl(ILogger logger, string videoFilePath, Func<Bitmap, object> bitmapToBitmapImageConverter)
         {
+            _bitmapToBitmapImageConverter = bitmapToBitmapImageConverter;
             _videoPath = videoFilePath;
-            string _videoName = Path.GetFileName(videoFilePath);
+            _videoName = Path.GetFileName(videoFilePath);
             _audioFileName = _videoName + ".wav";
             _audioPath = Path.Combine(videoFilePath, _audioFileName);
             _metadataFilePath = Path.Combine(videoFilePath, _videoName + ".vdm");
             _mediaLinkMap = new Dictionary<Guid, MediaLink>();
+            _frameBitmapImageMap = new Dictionary<uint, object>();
+            _frameGuidMap = new Dictionary<uint, ISet<Guid>>();
+
+            this._logger = logger;
             if (File.Exists(_metadataFilePath))
             {
                 String jsonStr = File.ReadAllText(_metadataFilePath, Encoding.UTF8);
@@ -51,8 +68,6 @@ namespace Project.Core
                 _mediaLinkMap.Add(link.Id, link);
             }
 
-            _frameGuidMap = new Dictionary<uint, ISet<Guid>>();
-
             foreach (MediaLink link in _links)
             {
                 for (uint i = link.FromFrame; i <= link.InitialHeight; i++)
@@ -64,6 +79,13 @@ namespace Project.Core
                     _frameGuidMap[i].Add(link.Id);
                 }
             }
+
+            // Get number files ending with .rgb in videoFilePath
+            _frameFilePaths = Directory.GetFiles(videoFilePath, "*.rgb");
+            _frameCount = (uint)_frameFilePaths.Length;
+
+            // sort _frameFilePaths alphabetically
+            Array.Sort(_frameFilePaths);
         }
 
         public Guid AddMediaLink(MediaLink link)
@@ -81,6 +103,41 @@ namespace Project.Core
                 _frameGuidMap[i].Add(link.Id);
             }
             return link.Id;
+        }
+
+        public object GetBitmapImageForFrame(uint frameNumber)
+        {
+            if (_frameBitmapImageMap.ContainsKey(frameNumber))
+            {
+                _logger.LogTrace("Found bitmap in the cache. reusing it");
+                return _frameBitmapImageMap[frameNumber];
+            }
+            _logger.LogTrace("Fetching bitmap from the disk");
+            object bmpImg;
+            Bitmap bmp;
+            using (var streamReader = new System.IO.StreamReader(_frameFilePaths[frameNumber - 1]))
+            using (var br = new BinaryReader(streamReader.BaseStream))
+            {
+                var bytes = br.ReadBytes((int)(3 * FRAME_WIDTH * FRAME_HEIGHT));
+                bmp = new Bitmap((int)FRAME_WIDTH, (int)FRAME_HEIGHT);
+                int ind = 0;
+                for (int y = 0; y < FRAME_HEIGHT; y++)
+                {
+                    for (int x = 0; x < FRAME_WIDTH; x++)
+                    {
+                        byte r = bytes[ind];
+                        byte g = bytes[ind + FRAME_HEIGHT * FRAME_WIDTH];
+                        byte b = bytes[ind + FRAME_HEIGHT * FRAME_WIDTH * 2];
+
+                        int pix = (int)(0xff000000 | ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff));
+                        bmp.SetPixel(x, y, System.Drawing.Color.FromArgb(pix));
+                        ind++;
+                    }
+                }
+            }
+            bmpImg = _bitmapToBitmapImageConverter(bmp);
+            _frameBitmapImageMap[frameNumber] = bmpImg;
+            return bmpImg;
         }
 
         public List<Box> GetBoxesForFrame(uint frameNumber)
@@ -101,7 +158,7 @@ namespace Project.Core
 
                 float progress = (float)(frameNumber - link.FromFrame) / diffInOriginalFrames;
 
-                uint finalX = (uint)(link.FromX  + diffInTargetX * progress);
+                uint finalX = (uint)(link.FromX + diffInTargetX * progress);
                 uint finalY = (uint)(link.FromY + diffInTargetY * progress);
                 uint finalHeight = (uint)(link.InitialHeight + diffInTargetHeight * progress);
                 uint finalWidth = (uint)(link.InitialWidth + diffInTargetWidth * progress);
@@ -109,6 +166,11 @@ namespace Project.Core
                 ret.Add(box);
             }
             return ret;
+        }
+
+        public uint GetFrameCount()
+        {
+            return _frameCount;
         }
 
         public MediaLink GetMediaLink(Guid linkId)
@@ -126,14 +188,15 @@ namespace Project.Core
             try
             {
                 _links.Remove(_mediaLinkMap[linkId]);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
             if (!_mediaLinkMap.ContainsKey(linkId))
                 return;
             MediaLink link = _mediaLinkMap[linkId];
-            if(link != null)
+            if (link != null)
                 _mediaLinkMap.Remove(linkId);
             for (uint i = link.FromFrame; i <= link.ToFrame; i++)
             {
