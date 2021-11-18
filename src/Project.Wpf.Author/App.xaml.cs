@@ -9,7 +9,11 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using System.Drawing.Imaging;
 
+#if WPF_PLAYER
+namespace Project.Wpf.Player
+#else
 namespace Project.Wpf.Author
+#endif
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -23,7 +27,11 @@ namespace Project.Wpf.Author
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
               .Enrich.FromLogContext()
+#if WPF_PLAYER
+              .WriteTo.File("Player.log")
+#else
               .WriteTo.File("Author.log")
+#endif
               .CreateLogger();
 
             _host = new HostBuilder()
