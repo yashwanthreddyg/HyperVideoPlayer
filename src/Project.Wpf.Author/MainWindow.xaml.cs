@@ -1,4 +1,5 @@
-﻿using Project.Core;
+﻿using Microsoft.Extensions.Logging;
+using Project.Core;
 using Project.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -22,15 +23,12 @@ namespace Project.Wpf.Author
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(ILogger<MainWindow> logger)
         {
             InitializeComponent();
             IMetadata metadata = MediaManager.GetMetadataFor("D:/gitwork/CSCI_576_Project/data/London/LondonOne");
-            //metadata.AddMediaLink(new Core.Models.MediaLink
-            //{
-            //    FromX = 67
-            //});
-            metadata.RemoveMediaLink(Guid.Parse("97e443ed-a55e-473f-a27c-afbc5effb05c"));
+            logger.LogDebug("in constructor");
+            metadata.RemoveMediaLink(Guid.Parse("429b42fe-4a1e-448a-aa26-13ff6494ea08"));
             metadata.Save();
         }
     }

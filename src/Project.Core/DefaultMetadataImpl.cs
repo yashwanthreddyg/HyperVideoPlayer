@@ -26,7 +26,7 @@ namespace Project.Core
             string _videoName = Path.GetFileName(videoFilePath);
             _audioFileName = _videoName + ".wav";
             _audioPath = Path.Combine(videoFilePath, _audioFileName);
-            _metadataFilePath = Path.Combine(videoFilePath, _videoName + ".hpvd");
+            _metadataFilePath = Path.Combine(videoFilePath, _videoName + ".vdm");
             _mediaLinkMap = new Dictionary<Guid, MediaLink>();
             if (File.Exists(_metadataFilePath))
             {
@@ -123,9 +123,18 @@ namespace Project.Core
 
         public void RemoveMediaLink(Guid linkId)
         {
-            _links.Remove(_mediaLinkMap[linkId]);
+            try
+            {
+                _links.Remove(_mediaLinkMap[linkId]);
+            }catch(Exception ex)
+            {
+
+            }
+            if (!_mediaLinkMap.ContainsKey(linkId))
+                return;
             MediaLink link = _mediaLinkMap[linkId];
-            _mediaLinkMap.Remove(linkId);
+            if(link != null)
+                _mediaLinkMap.Remove(linkId);
             for (uint i = link.FromFrame; i <= link.ToFrame; i++)
             {
                 _frameGuidMap[i].Remove(link.Id);

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Serilog.Extensions.Logging;
 using Serilog;
 
-namespace Project.Wpf.Player
+namespace Project.Wpf.Author
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -25,7 +25,7 @@ namespace Project.Wpf.Player
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
               .Enrich.FromLogContext()
-              .WriteTo.File("Player.log")
+              .WriteTo.File("Author.log")
               .CreateLogger();
 
             _host = new HostBuilder()
