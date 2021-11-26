@@ -5,6 +5,7 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
+		<UseWindowsForms>True</UseWindowsForms>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -14,6 +15,16 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <DefineConstants>$(DefineConstants)TRACE;WPF_PLAYER</DefineConstants>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="icons8-pause-button-100.png" />
+	  <None Remove="icons8-play-button-circled-100.png" />
+	  <None Remove="icons8-play-button-circled-100.png" />
+	  <None Remove="icons8-stop-circled-100.png" />
+	  <None Remove="play_button.png" />
+	  <None Remove="stop_button.png" />
+	  <None Remove="YHPlayer.png" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <Compile Include="..\Project.Wpf.Author\App.xaml.cs" Link="App.xaml.cs" />
@@ -26,6 +37,12 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Project.Core\Project.Core.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Resource Include="icons8-pause-button-100.png" />
+	  <Resource Include="icons8-play-button-circled-100.png" />
+	  <Resource Include="icons8-stop-circled-100.png" />
+	  <Resource Include="YHPlayer.png" />
 	</ItemGroup>
 
 </Project>
