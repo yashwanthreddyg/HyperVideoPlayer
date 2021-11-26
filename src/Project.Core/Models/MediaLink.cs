@@ -8,7 +8,7 @@ namespace Project.Core.Models
 {
     /// <summary>
     /// Represents the Link between videos as stored in the metadata file
-    /// This must later be interpreter per frame to get the actual box redered on the video
+    /// This must later be interpreted per frame to get the actual box rendered on the video
     /// </summary>
     public class MediaLink
     {
