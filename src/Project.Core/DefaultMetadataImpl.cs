@@ -107,7 +107,7 @@ namespace Project.Core
 
         public Uri GetAudioPath()
         {
-            return new Uri(_audioPath);
+            return new Uri(Path.GetFullPath(_audioPath));
         }
 
         public object GetBitmapImageForFrame(uint frameNumber)
