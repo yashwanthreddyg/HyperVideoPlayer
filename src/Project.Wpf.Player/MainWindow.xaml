@@ -15,7 +15,7 @@
             </MenuItem>
         </Menu>
         <Canvas x:Name="_imageCanvas" Width="352" Height="288" DockPanel.Dock="Top">
-            <Image x:Name="_imageWindow" Width="352" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="288"/>
+            <Image x:Name="_imageWindow" Width="352" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="288" MouseLeftButtonDown="Image_Clicked"/>
             <MediaElement x:Name="_mediaElement" MediaOpened="_mediaElement_MediaOpened" MediaEnded="_mediaElement_MediaEnded" LoadedBehavior="Manual"   UnloadedBehavior="Stop" Stretch="Fill" Width="45" Canvas.Left="70" Canvas.Top="219" />
         </Canvas>
         <Canvas x:Name="_controlsCanvas" Width="352">
