@@ -17,6 +17,7 @@ namespace Project.Core
             this._bitmapToBitmapImageConverter = bitmapToBitmapImageConverter;
             this._logger = logger;
         }
+
         public IMetadata GetMetadataFor(string videoFilePath)
         {
             return new DefaultMetadataImpl(_logger, videoFilePath, _bitmapToBitmapImageConverter);

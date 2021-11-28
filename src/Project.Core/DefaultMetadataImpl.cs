@@ -105,6 +105,11 @@ namespace Project.Core
             return link.Id;
         }
 
+        public Uri GetAudioPath()
+        {
+            return new Uri(_audioPath);
+        }
+
         public object GetBitmapImageForFrame(uint frameNumber)
         {
             if (_frameBitmapImageMap.ContainsKey(frameNumber))
@@ -112,6 +117,7 @@ namespace Project.Core
                 _logger.LogTrace("Found bitmap in the cache. reusing it");
                 return _frameBitmapImageMap[frameNumber];
             }
+
             _logger.LogTrace("Fetching bitmap from the disk");
             object bmpImg;
             Bitmap bmp;

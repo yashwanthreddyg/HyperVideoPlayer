@@ -12,6 +12,7 @@ namespace Project.Core
         uint GetFrameCount();
         object GetBitmapImageForFrame(uint frameNumber);
         void RemoveMediaLink(Guid linkId);
+        Uri GetAudioPath();
         void Save();
     }
 }

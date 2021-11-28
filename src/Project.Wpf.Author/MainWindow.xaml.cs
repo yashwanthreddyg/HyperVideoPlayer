@@ -26,6 +26,7 @@ namespace Project.Wpf.Author
         public MainWindow(ILogger<MainWindow> logger, MediaManager mediaManager)
         {
             InitializeComponent();
+
             IMetadata metadata = mediaManager.GetMetadataFor("D:/gitwork/CSCI_576_Project/data/London/LondonOne");
             logger.LogDebug("in constructor");
             metadata.RemoveMediaLink(Guid.Parse("429b42fe-4a1e-448a-aa26-13ff6494ea08"));

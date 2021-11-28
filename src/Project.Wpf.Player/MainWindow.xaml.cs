@@ -7,6 +7,9 @@ using System.Windows.Media.Imaging;
 using Project.Core;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows.Threading;
+using System.Threading;
+using Nito.AsyncEx;
 
 namespace Project.Wpf.Player
 {
@@ -15,11 +18,13 @@ namespace Project.Wpf.Player
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly float MS_PER_FRAME = 1000 / 30;
         private readonly ILogger _logger;
         private readonly MediaManager _mediaManager;
         private bool _isVideoPlaying = false;
         private uint _currentFrame = 0;
         private IMetadata? _metadata;
+        private System.Windows.Forms.Timer timerForVideoSync;
 
         public MainWindow(ILogger<MainWindow> logger, MediaManager mediaManager)
         {
@@ -27,6 +32,28 @@ namespace Project.Wpf.Player
 
             _logger = logger;
             _mediaManager = mediaManager;
+            
+
+            timerForVideoSync = new System.Windows.Forms.Timer();
+            timerForVideoSync.Interval = (int) 60;
+
+            timerForVideoSync.Tick += syncVideo;
+            timerForVideoSync.Start();
+
+            UpdateFrame();
+            EnableControls();
+        }
+
+
+        void syncVideo(object sender, EventArgs e)
+        {
+            if(this._isVideoPlaying)
+            {
+                uint frameNum = (uint) Math.Floor(_mediaElement.Position.TotalMilliseconds / MS_PER_FRAME) + 1;
+                this._slider.Value = frameNum;
+                this._imageWindow.Source = this._metadata?.GetBitmapImageForFrame(frameNum) as BitmapSource;
+                RenderBoxesForCurrentFrame();
+            }
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -37,13 +64,15 @@ namespace Project.Wpf.Player
 
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
-                    _metadata = _mediaManager.GetMetadataFor(dialog.SelectedPath);
-                    
+                    String selectedPath = dialog.SelectedPath;
+                    _metadata = _mediaManager.GetMetadataFor(selectedPath);
+
                     this._slider.Maximum = _metadata.GetFrameCount();
                     this._slider.Minimum = 1;
                     this._slider.IsEnabled = true;
                     this._currentFrame = 1;
 
+                    _mediaElement.Source = _metadata.GetAudioPath();
                     UpdateFrame();
                     EnableControls();
                 }
@@ -57,7 +86,14 @@ namespace Project.Wpf.Player
 
         private void Play()
         {
-            // TODO - play the video at 30fps
+            _mediaElement.Play();
+            this._isVideoPlaying = true;
+        }
+
+        private void Pause()
+        {
+            _mediaElement.Pause();
+            this._isVideoPlaying = false;
         }
 
         private void PlayButton_MouseDown(object sender, MouseButtonEventArgs e)
@@ -66,12 +102,12 @@ namespace Project.Wpf.Player
             {
                 this._isVideoPlaying = false;
                 this._playButtonImage.Source = new BitmapImage(new Uri("pack://application:,,,/icons8-play-button-circled-100.png"));
+                Pause();
             }
             else
             {
                 this._isVideoPlaying = true;
                 this._playButtonImage.Source = new BitmapImage(new Uri("pack://application:,,,/icons8-pause-button-100.png"));
-
                 Play();
             }
         }
@@ -87,14 +123,14 @@ namespace Project.Wpf.Player
             rect.Height = 100; // Replace with box.height
             Canvas.SetLeft(rect, 0); // Replace with box.X
             Canvas.SetTop(rect, 0); // replace with box.Y
-            
+
             _imageCanvas.Children.Add(rect);
             Panel.SetZIndex(rect, 2);
             //List<Core.Models.Box> boxes = _metadata.GetBoxesForFrame(this._currentFrame);
 
             //foreach (Core.Models.Box box in boxes)
             //{
-                
+
             //}
         }
 
@@ -121,6 +157,7 @@ namespace Project.Wpf.Player
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             this._currentFrame = (uint)Math.Round(e.NewValue);
+            _mediaElement.Position = TimeSpan.FromMilliseconds(this._currentFrame * MS_PER_FRAME);
             UpdateFrame();
         }
 
@@ -129,8 +166,18 @@ namespace Project.Wpf.Player
             this._slider.Value = 0;
             this._imageWindow.Source = null;
             this._isVideoPlaying = false;
-
+            this._mediaElement.Stop();
             DisableControls();
+        }
+
+        private void _mediaElement_MediaOpened(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void _mediaElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
