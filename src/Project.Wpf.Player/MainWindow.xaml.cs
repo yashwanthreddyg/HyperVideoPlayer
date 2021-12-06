@@ -35,7 +35,7 @@ namespace Project.Wpf.Player
             
 
             timerForVideoSync = new System.Windows.Forms.Timer();
-            timerForVideoSync.Interval = (int) 60;
+            timerForVideoSync.Interval = (int) 33;
 
             timerForVideoSync.Tick += syncVideo;
             timerForVideoSync.Start();
@@ -57,7 +57,9 @@ namespace Project.Wpf.Player
                 }
 
                 _currentFrame = frameNum;
+                this._slider.ValueChanged -= Slider_ValueChanged;
                 this._slider.Value = frameNum;
+                this._slider.ValueChanged += Slider_ValueChanged;
                 this._imageWindow.Source = this._metadata?.GetBitmapImageForFrame(frameNum) as BitmapSource;
                 RenderBoxesForCurrentFrame();
             }
