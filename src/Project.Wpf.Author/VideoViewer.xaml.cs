@@ -82,20 +82,26 @@ namespace Project.Wpf.Author
         {
             _drawing = true;
             _origin = e.GetPosition(this);
+            _imageCanvas.Children.Add(new Rectangle());
         }
 
         private void _imageCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             _drawing = false;
+
+            // Wait one second
+            // Pop up dialog
+
+            // Use result of MediaLink dialog (nullable)
+            // Depending on result, update links ListView control or not
             return;
         }
 
         private void _imageCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_drawing)
+            if (_drawing && e.LeftButton == MouseButtonState.Pressed)
             {
-                _imageCanvas.Children.Clear();
-
+                _imageCanvas.Children.RemoveAt(_imageCanvas.Children.Count - 1);
                 Point p = e.GetPosition(this);
 
                 Rectangle rect;
