@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Project" xmlns:author="clr-namespace:Project.Wpf.Author"
+        xmlns:author="clr-namespace:Project.Wpf.Author"
         mc:Ignorable="d"
         Title="MainWindow" Height="419" Width="769">
     <Canvas>
@@ -34,5 +34,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button x:Name="PLACEHOLDERBUTTON" Content="Button" Canvas.Left="535" Canvas.Top="349" Click="PLACEHOLDERBUTTON_Click"/>
     </Canvas>
 </Window>

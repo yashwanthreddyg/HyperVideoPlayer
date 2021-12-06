@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Project.Wpf.Author.MediaLinkCreatorPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:author="clr-namespace:Project.Wpf.Author"
+             mc:Ignorable="d" Height="474" Width="800">
+    <Canvas Width="800" Height="474">
+        <author:VideoViewer x:Name="_projectVideo" Canvas.Left="10" Canvas.Top="26"></author:VideoViewer>
+        <author:VideoViewer x:Name="_linkedVideo" Canvas.Left="425" Canvas.Top="26"></author:VideoViewer>
+        <TextBox Canvas.Left="20" TextWrapping="Wrap" Text="TextBox" Canvas.Top="395" Width="120"/>
+        <Button Content="OPEN" Canvas.Left="425" Canvas.Top="413" IsCancel="True"/>
+        <Button Content="DELETE" Canvas.Left="505" Canvas.Top="423"/>
+        <Button Content="CANCEL" Canvas.Left="660" Canvas.Top="433" Click="Button_Click"/>
+    </Canvas>
+</UserControl>

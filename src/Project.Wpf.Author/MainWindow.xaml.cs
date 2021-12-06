@@ -36,6 +36,17 @@ namespace Project.Wpf.Author
         {
             this.Close();
         }
+
+        private void PLACEHOLDERBUTTON_Click(object sender, RoutedEventArgs e)
+        {
+            Window window = new Window
+            {
+                Title = "My User Control Dialog",
+                Content = new MediaLinkCreatorPanel()
+            };
+
+            window.ShowDialog();
+        }
     }
 
     public class LinkInfo
