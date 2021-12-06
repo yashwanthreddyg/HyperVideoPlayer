@@ -3,8 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Project"
+        xmlns:local="clr-namespace:Project" xmlns:author="clr-namespace:Project.Wpf.Author"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid/>
+        Title="MainWindow" Height="419" Width="769">
+    <Canvas>
+        <Menu Width="769">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open" Click="Open_Click"/>
+                <Separator />
+                <MenuItem Header="_Exit" Click="Exit_Click"/>
+            </MenuItem>
+        </Menu>
+        <author:VideoViewer x:Name="_projectVideo" Canvas.Left="10" Canvas.Top="26"></author:VideoViewer>
+        <ListView x:Name="_linkBox" Height="238" Width="300" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Left="428" Canvas.Top="26">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}" />
+                        <TextBlock Grid.Column="1" Text="{Binding Frame}" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Canvas>
 </Window>
