@@ -138,12 +138,13 @@ namespace Project.Wpf.Player
         }
 
         private void RenderBoxesForCurrentFrame()
-        {   
-            foreach (Box box in GetMockBoxes())
+        {
+            _imageCanvas.Children.Clear();
+            foreach (Box box in _metadata.GetBoxesForFrame(this._currentFrame))
             {
                 System.Windows.Shapes.Rectangle rect;
                 rect = new System.Windows.Shapes.Rectangle();
-                rect.Stroke = new SolidColorBrush(Colors.Black);
+                rect.Stroke = new SolidColorBrush(Colors.Red);
                 
                 rect.Width = box.Width;
                 rect.Height = box.Height;
@@ -184,7 +185,9 @@ namespace Project.Wpf.Player
 
         private void StopMedia()
         {
+            this._slider.ValueChanged -= Slider_ValueChanged;
             this._slider.Value = 0;
+            this._slider.ValueChanged += Slider_ValueChanged;
             this._imageWindow.Source = null;
             this._isVideoPlaying = false;
             this._mediaElement.Stop();
@@ -219,23 +222,11 @@ namespace Project.Wpf.Player
             return false;
         }
 
-        private List<Box> GetMockBoxes()
-        {
-            List<Box> boxes = new List<Box>();
-
-            //boxes.Add(new Box(20, 30, 50, 60, new MediaLink(0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, @"C:\repos\MSD_Datasets\NewYorkCity\NewYorkCity\NYOne")));
-            //boxes.Add(new Box(120, 130, 50, 60, new MediaLink(0, 7500, 0, 0, 0, 0, 0, 0, 0, 0, @"C:\repos\MSD_Datasets\London\LondonOne")));
-            //boxes.Add(new Box(170, 220, 20, 30, new MediaLink(0, 6000, 0, 0, 0, 0, 0, 0, 0, 0, @"C:\repos\MSD_Datasets\AIFilmTwo")));
-
-            return boxes;
-        }
-
         private void Image_Clicked(object sender, MouseButtonEventArgs e)
         {
             Point p = e.GetPosition(this);
 
-            // List<Box> boxes = _metadata.GetBoxesForFrame(this._currentFrame);
-            var boxes = GetMockBoxes();
+            List<Box> boxes = _metadata.GetBoxesForFrame(this._currentFrame);
 
             foreach (Box box in boxes)
             {

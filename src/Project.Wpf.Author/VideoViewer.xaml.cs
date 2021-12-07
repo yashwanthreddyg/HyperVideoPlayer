@@ -65,10 +65,13 @@ namespace Project.Wpf.Author
         public void SetFrame(uint frame)
         {
             this._currentFrame = frame;
+            this._slider.ValueChanged -= Slider_ValueChanged;
+            this._slider.Value = _currentFrame;
+            this._slider.ValueChanged += Slider_ValueChanged;
             UpdateFrame();
         }
 
-        private void UpdateFrame()
+        public void UpdateFrame()
         {
             this._imageWindow.Source = this._metadata.GetBitmapImageForFrame(this._currentFrame) as BitmapSource;
             RenderBoxesForCurrentFrame();

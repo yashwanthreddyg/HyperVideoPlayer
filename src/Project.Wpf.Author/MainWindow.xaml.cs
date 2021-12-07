@@ -129,6 +129,7 @@ namespace Project.Wpf.Author
             _projectVideo._metadata.RemoveMediaLink((this._linkBox.SelectedItem as MediaLink).Id);
             _mediaLinks.Remove(_linkBox.SelectedItem as MediaLink);
             this._linkBox.Items.Refresh();
+            _projectVideo.UpdateFrame();
         }
     }
 }
