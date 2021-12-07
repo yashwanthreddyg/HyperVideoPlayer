@@ -17,7 +17,7 @@ namespace Project.Core.Models
             uint fromY, uint toY,
             uint initialHeight, uint finalHeight,
             uint initialWidth, uint finalWidth,
-            String toVideo)
+            String toVideo, string linkName)
         {
             this.Id = Guid.NewGuid();
             this.FromFrame = fromFrame;
@@ -31,6 +31,7 @@ namespace Project.Core.Models
             this.InitialHeight = initialHeight;
             this.FinalHeight = finalHeight;
             this.ToVideo = toVideo;
+            this.LinkName = linkName;
         }
         public Guid Id { get; internal set; }
         public uint FromFrame { get; }
@@ -44,5 +45,6 @@ namespace Project.Core.Models
         public uint FinalHeight { get; }
         public uint FinalWidth { get; }
         public String ToVideo { get; }
+        public string LinkName { get; }
     }
 }

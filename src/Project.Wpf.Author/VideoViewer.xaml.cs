@@ -45,12 +45,12 @@ namespace Project.Wpf.Author
 
         private void RenderBoxesForCurrentFrame()
         {
-            return;
+            _imageCanvas.Children.Clear();
             foreach (Box box in _metadata.GetBoxesForFrame(_currentFrame))
             {
                 System.Windows.Shapes.Rectangle rect;
                 rect = new System.Windows.Shapes.Rectangle();
-                rect.Stroke = new SolidColorBrush(Colors.Black);
+                rect.Stroke = new SolidColorBrush(Colors.Red);
 
                 rect.Width = box.Width;
                 rect.Height = box.Height;
@@ -101,6 +101,7 @@ namespace Project.Wpf.Author
 
             // Use result of MediaLink dialog (nullable)
             // Depending on result, update links ListView control or not
+            ((this.Parent as Canvas).Parent as MainWindow).OnRectangleDraw();
             return;
         }
 
@@ -124,6 +125,11 @@ namespace Project.Wpf.Author
                 Panel.SetZIndex(rect, 5);
                 lastRectangle = rect;
             }
+        }
+
+        private void _imageCanvas_MouseLeftButtonUp(object sender, MouseEventArgs e)
+        {
+
         }
     }
 }

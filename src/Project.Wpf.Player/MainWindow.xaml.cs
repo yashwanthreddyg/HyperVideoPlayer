@@ -223,9 +223,9 @@ namespace Project.Wpf.Player
         {
             List<Box> boxes = new List<Box>();
 
-            boxes.Add(new Box(20, 30, 50, 60, new MediaLink(0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, @"C:\repos\MSD_Datasets\NewYorkCity\NewYorkCity\NYOne")));
-            boxes.Add(new Box(120, 130, 50, 60, new MediaLink(0, 7500, 0, 0, 0, 0, 0, 0, 0, 0, @"C:\repos\MSD_Datasets\London\LondonOne")));
-            boxes.Add(new Box(170, 220, 20, 30, new MediaLink(0, 6000, 0, 0, 0, 0, 0, 0, 0, 0, @"C:\repos\MSD_Datasets\AIFilmTwo")));
+            //boxes.Add(new Box(20, 30, 50, 60, new MediaLink(0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, @"C:\repos\MSD_Datasets\NewYorkCity\NewYorkCity\NYOne")));
+            //boxes.Add(new Box(120, 130, 50, 60, new MediaLink(0, 7500, 0, 0, 0, 0, 0, 0, 0, 0, @"C:\repos\MSD_Datasets\London\LondonOne")));
+            //boxes.Add(new Box(170, 220, 20, 30, new MediaLink(0, 6000, 0, 0, 0, 0, 0, 0, 0, 0, @"C:\repos\MSD_Datasets\AIFilmTwo")));
 
             return boxes;
         }

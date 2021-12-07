@@ -149,6 +149,10 @@ namespace Project.Core
         public List<Box> GetBoxesForFrame(uint frameNumber)
         {
             List<Box> ret = new List<Box>();
+            
+            if (!_frameGuidMap.ContainsKey(frameNumber))
+                return new List<Box>();
+
             ISet<Guid> linksInCurrentFrame = _frameGuidMap[frameNumber];
             if (linksInCurrentFrame == null)
                 return ret;

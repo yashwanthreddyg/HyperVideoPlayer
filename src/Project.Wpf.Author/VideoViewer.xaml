@@ -7,7 +7,7 @@
              mc:Ignorable="d" d:DesignWidth="352" Width="352" Height="364">
     <Canvas>
         <Slider x:Name="_slider" Width="332" Canvas.Left="10" Canvas.Top="327" IsEnabled="False" ValueChanged="Slider_ValueChanged"/>
-        <Image x:Name="_imageWindow" Width="352" Height="288"  MouseLeftButtonDown="_imageCanvas_MouseLeftButtonDown" MouseLeftButtonUp="_imageCanvas_MouseLeftButtonUp" MouseMove="_imageCanvas_MouseMove"/>
-        <Canvas x:Name="_imageCanvas" Height="288" Width="352" MouseLeftButtonDown="_imageCanvas_MouseLeftButtonDown" MouseLeftButtonUp="_imageCanvas_MouseLeftButtonUp" MouseMove="_imageCanvas_MouseMove"/>
+        <Image x:Name="_imageWindow" Width="352" Height="288" MouseLeftButtonDown="_imageCanvas_MouseLeftButtonDown" MouseLeftButtonUp="_imageCanvas_MouseLeftButtonUp" MouseMove="_imageCanvas_MouseMove" MouseUp="_imageCanvas_MouseLeftButtonUp"/>
+        <Canvas x:Name="_imageCanvas" Height="288" Width="352"/>
     </Canvas>
 </UserControl>
