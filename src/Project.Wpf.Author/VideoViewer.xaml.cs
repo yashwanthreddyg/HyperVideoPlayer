@@ -61,6 +61,12 @@ namespace Project.Wpf.Author
             }
         }
 
+        public void SetFrame(uint frame)
+        {
+            this._currentFrame = frame;
+            UpdateFrame();
+        }
+
         private void UpdateFrame()
         {
             this._imageWindow.Source = this._metadata.GetBitmapImageForFrame(this._currentFrame) as BitmapSource;

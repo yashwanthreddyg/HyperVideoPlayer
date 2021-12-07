@@ -15,25 +15,21 @@
             </MenuItem>
         </Menu>
         <author:VideoViewer x:Name="_projectVideo" Canvas.Left="10" Canvas.Top="26"></author:VideoViewer>
-        <ListView x:Name="_linkBox" Height="238" Width="300" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Left="428" Canvas.Top="26">
-            <ListView.ItemTemplate>
+        <ListBox x:Name="_linkBox" Height="238" Width="300" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Left="428" Canvas.Top="64" SelectionChanged="_linkBox_SelectionChanged">
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="50" />
                             <ColumnDefinition Width="100" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding Name}" />
-                        <TextBlock Grid.Column="1" Text="{Binding Frame}" />
+                        <TextBlock Grid.Column="1" Text="{Binding Frame}" Margin="118,0,-118,0" />
                     </Grid>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <Button x:Name="PLACEHOLDERBUTTON" Content="Button" Canvas.Left="535" Canvas.Top="349" Click="PLACEHOLDERBUTTON_Click"/>
+        <Label Content="Links:" Canvas.Left="428" Canvas.Top="38"/>
     </Canvas>
 </Window>

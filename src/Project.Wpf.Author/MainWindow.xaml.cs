@@ -15,7 +15,7 @@ namespace Project.Wpf.Author
         public MainWindow(ILogger<MainWindow> logger, MediaManager mediaManager)
         {
             InitializeComponent();
-            
+
             this._projectVideo.MediaManager = mediaManager;
         }
 
@@ -47,11 +47,13 @@ namespace Project.Wpf.Author
 
             window.ShowDialog();
         }
-    }
 
-    public class LinkInfo
-    {
-        public string Name { get; set; }
-        public int Frame { get; set; }
+        private void _linkBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (_linkBox.SelectedItem != null)
+            {
+                _projectVideo.SetFrame((_linkBox.SelectedItem as Core.Models.MediaLink).FromFrame);
+            }   
+        }
     }
 }
