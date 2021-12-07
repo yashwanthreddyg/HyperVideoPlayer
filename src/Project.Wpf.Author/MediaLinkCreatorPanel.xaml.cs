@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Project.Core;
+using Project.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,17 +22,57 @@ namespace Project.Wpf.Author
     /// </summary>
     public partial class MediaLinkCreatorPanel : UserControl
     {
-        public MediaLinkCreatorPanel()
+        public class MediaLinkCreatorResult
+        {
+            public string linkName;
+            public uint destX;
+            public uint destY;
+            public uint destWidth;
+            public uint destHeight;
+            public uint destFrame;
+            public string linkedFile;
+            public uint linkedFrame;
+        }
+
+        MediaManager MediaManager;
+        public MediaLinkCreatorResult result;
+
+        public MediaLinkCreatorPanel(String currentVideoPath, uint minFrame, MediaManager mm)
         {
             InitializeComponent();
-
+            this.MediaManager = mm;
+            this._projectVideo.MediaManager = mm;
+            this._linkedVideo.MediaManager = mm;
+            this._projectVideo.LoadVideo(currentVideoPath);
+            this._projectVideo._slider.Minimum = minFrame;
             this.Width = 800;
             this.Height = 474;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Save_Clicked(object sender, RoutedEventArgs e)
         {
+            result = new MediaLinkCreatorResult();
+            result.linkName = tb_linkName.Text;
+            result.destX = (uint)_projectVideo._origin.X;
+            result.destY = (uint)_projectVideo._origin.Y;
+            result.destWidth = (uint)_projectVideo.lastRectangle.Width;
+            result.destHeight = (uint)_projectVideo.lastRectangle.Height;
+            result.destFrame = (uint)_projectVideo._slider.Value;
+            result.linkedFile = _linkedVideo._metadata.GetPath();
+            result.linkedFrame = (uint)_linkedVideo._slider.Value;
+        }
 
+        private void Open_Clicked(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    this._linkedVideo.LoadVideo(dialog.SelectedPath);
+                }
+            }
         }
     }
 }
