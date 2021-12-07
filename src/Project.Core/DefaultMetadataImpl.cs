@@ -70,7 +70,7 @@ namespace Project.Core
 
             foreach (MediaLink link in _links)
             {
-                for (uint i = link.FromFrame; i <= link.InitialHeight; i++)
+                for (uint i = link.FromFrame; i <= link.ToFrame; i++)
                 {
                     if (!_frameGuidMap.ContainsKey(i))
                     {
@@ -161,10 +161,10 @@ namespace Project.Core
                 MediaLink link = _mediaLinkMap[id];
                 uint diffInTargetX = link.ToX - link.FromX;
                 uint diffInTargetY = link.ToY - link.FromY;
-                uint diffInTargetHeight = link.FinalHeight - link.InitialHeight;
-                uint diffInTargetWidth = link.FinalWidth - link.InitialWidth;
+                int diffInTargetHeight = (int)(link.FinalHeight - link.InitialHeight);
+                int diffInTargetWidth = (int)(link.FinalWidth - link.InitialWidth);
 
-                uint diffInOriginalFrames = link.FromFrame - link.ToFrame;
+                uint diffInOriginalFrames = link.ToFrame - link.FromFrame;
 
                 float progress = (float)(frameNumber - link.FromFrame) / diffInOriginalFrames;
 
@@ -172,7 +172,7 @@ namespace Project.Core
                 uint finalY = (uint)(link.FromY + diffInTargetY * progress);
                 uint finalHeight = (uint)(link.InitialHeight + diffInTargetHeight * progress);
                 uint finalWidth = (uint)(link.InitialWidth + diffInTargetWidth * progress);
-                Box box = new Box(finalX, finalY, finalHeight, finalWidth, link);
+                Box box = new Box(finalX, finalY, finalWidth, finalHeight, link);
                 ret.Add(box);
             }
             return ret;

@@ -125,6 +125,8 @@ namespace Project.Wpf.Author
         private void DeleteLink_Click(object sender, RoutedEventArgs e)
         {
             _projectVideo._metadata.RemoveMediaLink((this._linkBox.SelectedItem as MediaLink).Id);
+            _mediaLinks.Remove(_linkBox.SelectedItem as MediaLink);
+            this._linkBox.Items.Refresh();
         }
     }
 }
