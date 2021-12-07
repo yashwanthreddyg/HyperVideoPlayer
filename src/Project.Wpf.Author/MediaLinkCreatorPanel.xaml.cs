@@ -74,5 +74,13 @@ namespace Project.Wpf.Author
                 }
             }
         }
+
+        private void LinkName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (this.tb_linkName.Text.Length > 0)
+                this._saveButton.IsEnabled = true;
+            else
+                this._saveButton.IsEnabled = false;
+        }
     }
 }

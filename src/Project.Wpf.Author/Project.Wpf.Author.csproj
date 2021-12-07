@@ -32,10 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="YH_Author_Icon.jpg" />
     <Resource Include="YH_Author_Icon2.bmp" />
-    <Resource Include="YH_Author_Icon2.ico" />
-    <Resource Include="YH_Icon3.jpg" />
   </ItemGroup>
 
 </Project>

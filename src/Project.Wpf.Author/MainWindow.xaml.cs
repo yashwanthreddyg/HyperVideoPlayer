@@ -90,7 +90,9 @@ namespace Project.Wpf.Author
             Window window = new Window
             {
                 Title = "Create Media Link",
-                Content = panel
+                Content = panel,
+                Width = panel.Width,
+                Height = panel.Height,
             };
 
             window.ShowDialog();
