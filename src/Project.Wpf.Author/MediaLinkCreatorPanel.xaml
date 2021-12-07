@@ -8,8 +8,8 @@
     <Canvas Width="800" Height="474">
         <author:VideoViewer x:Name="_projectVideo" Canvas.Left="10" Canvas.Top="26"></author:VideoViewer>
         <author:VideoViewer x:Name="_linkedVideo" Canvas.Left="425" Canvas.Top="26"></author:VideoViewer>
-        <TextBox x:Name="tb_linkName" Canvas.Left="20" TextWrapping="Wrap" Text="TextBox" Canvas.Top="395" Width="120"/>
-        <Button Content="OPEN" Canvas.Left="425" Canvas.Top="413" Click="Open_Clicked"/>
-        <Button Content="SAVE" Canvas.Left="730" Canvas.Top="413" Click="Save_Clicked" IsCancel="True"/>
+        <TextBox x:Name="tb_linkName" Canvas.Left="20" TextWrapping="Wrap" Canvas.Top="395" Width="120" TextChanged="LinkName_TextChanged"/>
+        <Button Content="Open Target Video" Canvas.Left="425" Canvas.Top="394" Click="Open_Clicked"/>
+        <Button x:Name="_saveButton" Content="Save Link" Canvas.Left="710" Canvas.Top="394" Click="Save_Clicked" IsCancel="True" IsEnabled="False"/>
     </Canvas>
 </UserControl>
