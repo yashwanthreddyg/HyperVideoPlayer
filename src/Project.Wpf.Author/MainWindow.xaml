@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:author="clr-namespace:Project.Wpf.Author"
         mc:Ignorable="d"
-        Title="MainWindow" Height="419" Width="769">
+        Title="YH HyperVideo Premiere" Height="474" Width="769" Icon="/YH_Author_Icon2.bmp">
     <Canvas>
         <Menu Width="769">
             <MenuItem Header="_File">
@@ -14,8 +14,8 @@
                 <MenuItem Header="_Exit" Click="Exit_Click"/>
             </MenuItem>
         </Menu>
-        <author:VideoViewer x:Name="_projectVideo" Canvas.Left="10" Canvas.Top="26"></author:VideoViewer>
-        <ListBox x:Name="_linkBox" Height="238" Width="300" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Left="428" Canvas.Top="49" SelectionChanged="_linkBox_SelectionChanged">
+        <author:VideoViewer x:Name="_projectVideo" Canvas.Left="10" Canvas.Top="49"></author:VideoViewer>
+        <ListBox x:Name="_linkBox" Height="320" Width="300" d:ItemsSource="{d:SampleData ItemCount=5}" Canvas.Left="428" Canvas.Top="49" SelectionChanged="_linkBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,2">
@@ -29,7 +29,11 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="PLACEHOLDERBUTTON" Content="Button" Canvas.Left="535" Canvas.Top="349" Click="PLACEHOLDERBUTTON_Click"/>
+        <Button x:Name="_createLink" Content="Create Link" Canvas.Left="428" Canvas.Top="389" Click="CreateLink_Click"/>
         <Label Content="Links:" Canvas.Left="428" Canvas.Top="23"/>
+        <Button x:Name="_saveProject" Content="Save Project" Canvas.Left="659" Canvas.Top="389" Click="SaveProject_Click"/>
+        <Label Content="Current Project:" Canvas.Left="10" Canvas.Top="23"/>
+        <Label Content="" Canvas.Left="102" Canvas.Top="23"/>
+        <Button x:Name="_deleteLink" Content="Delete Link" Canvas.Left="515" Canvas.Top="389" Click="DeleteLink_Click"/>
     </Canvas>
 </Window>

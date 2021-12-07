@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="YH_Author_Icon.jpg" />
+    <None Remove="YH_Author_Icon2.bmp" />
+    <None Remove="YH_Author_Icon2.ico" />
+    <None Remove="YH_Icon3.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
@@ -22,6 +29,13 @@
     <Reference Include="System.Windows.Forms.VisualStudio.15.0">
       <HintPath>..\..\..\..\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\System.Windows.Forms.VisualStudio.15.0.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="YH_Author_Icon.jpg" />
+    <Resource Include="YH_Author_Icon2.bmp" />
+    <Resource Include="YH_Author_Icon2.ico" />
+    <Resource Include="YH_Icon3.jpg" />
   </ItemGroup>
 
 </Project>

@@ -16,6 +16,7 @@ namespace Project.Wpf.Author
         MediaManager MediaManager { get; set; }
         string currentVideoPath = string.Empty;
         public List<MediaLink> _mediaLinks = new List<MediaLink>();
+        bool _projectModified = false;
 
         public MainWindow(ILogger<MainWindow> logger, MediaManager mediaManager)
         {
@@ -37,6 +38,9 @@ namespace Project.Wpf.Author
                 {
                     currentVideoPath = dialog.SelectedPath;
                     this._projectVideo.LoadVideo(dialog.SelectedPath);
+                    _mediaLinks = new List<MediaLink>(this._projectVideo._metadata.GetMediaLinks());
+                    this._linkBox.ItemsSource = _mediaLinks;
+                    this._linkBox.Items.Refresh();
                 }
             }
         }
@@ -72,12 +76,20 @@ namespace Project.Wpf.Author
             }
         }
 
-        private void PLACEHOLDERBUTTON_Click(object sender, RoutedEventArgs e)
+        private void _linkBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (_linkBox.SelectedItem != null)
+            {
+                _projectVideo.SetFrame((_linkBox.SelectedItem as Core.Models.MediaLink).FromFrame);
+            }   
+        }
+
+        private void CreateLink_Click(object sender, RoutedEventArgs e)
         {
             MediaLinkCreatorPanel panel = new MediaLinkCreatorPanel(currentVideoPath, _projectVideo._currentFrame, MediaManager);
             Window window = new Window
             {
-                Title = "My User Control Dialog",
+                Title = "Create Media Link",
                 Content = panel
             };
 
@@ -92,23 +104,27 @@ namespace Project.Wpf.Author
             {
                 var mediaLink = new Core.Models.MediaLink(_projectVideo._currentFrame, result.destFrame, (uint)_projectVideo._origin.X, result.destX, (uint)_projectVideo._origin.Y, result.destY, (uint)_projectVideo.lastRectangle.Height, result.destHeight, (uint)_projectVideo.lastRectangle.Width, result.destWidth, result.linkedFile, result.linkName);
                 _projectVideo._metadata.AddMediaLink(mediaLink);
-                //_mediaLinks.Add(new LinkInfo() { LinkName = mediaLink.LinkName});
                 _mediaLinks.Add(mediaLink);
                 this._linkBox.Items.Refresh();
+
+                if (!_projectModified)
+                {
+                    this.Title += "\t*";
+                }
+                _projectModified = true;
             }
         }
 
-        private void _linkBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void SaveProject_Click(object sender, RoutedEventArgs e)
         {
-            if (_linkBox.SelectedItem != null)
-            {
-                _projectVideo.SetFrame((_linkBox.SelectedItem as Core.Models.MediaLink).FromFrame);
-            }   
+            _projectVideo._metadata.Save();
+            _projectModified = false;
+            this.Title = this.Title.Trim('*');
         }
-    }
 
-    public class LinkInfo
-    {
-        public string LinkName { get; set; }
+        private void DeleteLink_Click(object sender, RoutedEventArgs e)
+        {
+            _projectVideo._metadata.RemoveMediaLink((this._linkBox.SelectedItem as MediaLink).Id);
+        }
     }
 }
