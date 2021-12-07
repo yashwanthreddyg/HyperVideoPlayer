@@ -189,6 +189,11 @@ namespace Project.Core
             return _links.AsReadOnly();
         }
 
+        public string GetPath()
+        {
+            return _videoPath;
+        }
+
         public void RemoveMediaLink(Guid linkId)
         {
             try

@@ -20,10 +20,11 @@ namespace Project.Wpf.Author
     public partial class VideoViewer : UserControl
     {
         public MediaManager MediaManager { get; set; }
-        private IMetadata _metadata;
-        private uint _currentFrame = 1;
+        public IMetadata _metadata;
+        public uint _currentFrame = 1;
         private bool _drawing = false;
-        private Point _origin;
+        public Point _origin;
+        public Rectangle lastRectangle;
 
         public VideoViewer()
         {
@@ -121,6 +122,7 @@ namespace Project.Wpf.Author
 
                 _imageCanvas.Children.Add(rect);
                 Panel.SetZIndex(rect, 5);
+                lastRectangle = rect;
             }
         }
     }

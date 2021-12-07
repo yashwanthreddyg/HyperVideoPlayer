@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using Project.Core;
+using System;
 using System.Collections.Generic;
 using System.Windows;
-
-
+using static Project.Wpf.Author.MediaLinkCreatorPanel;
 
 namespace Project.Wpf.Author
 {
@@ -12,10 +12,12 @@ namespace Project.Wpf.Author
     /// </summary>
     public partial class MainWindow : Window
     {
+        MediaManager MediaManager { get; set; }
+        string currentVideoPath = string.Empty;
         public MainWindow(ILogger<MainWindow> logger, MediaManager mediaManager)
         {
             InitializeComponent();
-
+            this.MediaManager = mediaManager;
             this._projectVideo.MediaManager = mediaManager;
         }
 
@@ -27,6 +29,7 @@ namespace Project.Wpf.Author
 
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
+                    currentVideoPath = dialog.SelectedPath;
                     this._projectVideo.LoadVideo(dialog.SelectedPath);
                 }
             }
@@ -39,13 +42,21 @@ namespace Project.Wpf.Author
 
         private void PLACEHOLDERBUTTON_Click(object sender, RoutedEventArgs e)
         {
+            MediaLinkCreatorPanel panel = new MediaLinkCreatorPanel(currentVideoPath, _projectVideo._currentFrame, MediaManager);
             Window window = new Window
             {
                 Title = "My User Control Dialog",
-                Content = new MediaLinkCreatorPanel()
+                Content = panel
             };
 
             window.ShowDialog();
+            MediaLinkCreatorResult result = panel.result;
+
+            // Do something with the result
+            if(result == null)
+            {
+                Console.WriteLine();
+            }
         }
 
         private void _linkBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
