@@ -159,8 +159,8 @@ namespace Project.Core
             foreach (Guid id in linksInCurrentFrame)
             {
                 MediaLink link = _mediaLinkMap[id];
-                uint diffInTargetX = link.ToX - link.FromX;
-                uint diffInTargetY = link.ToY - link.FromY;
+                uint diffInTargetX = link.ToX >= link.FromX ? (link.ToX - link.FromX) : (link.FromX - link.ToX);
+                uint diffInTargetY = link.ToY >= link.FromY ? (link.ToY - link.FromY) : (link.FromY - link.ToY);
                 int diffInTargetHeight = (int)(link.FinalHeight - link.InitialHeight);
                 int diffInTargetWidth = (int)(link.FinalWidth - link.InitialWidth);
 
