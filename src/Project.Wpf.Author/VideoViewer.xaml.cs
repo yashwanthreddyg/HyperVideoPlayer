@@ -25,6 +25,7 @@ namespace Project.Wpf.Author
         private bool _drawing = false;
         public Point _origin;
         public Rectangle lastRectangle;
+        public bool IsLinking = false;
 
         public VideoViewer()
         {
@@ -45,6 +46,9 @@ namespace Project.Wpf.Author
 
         private void RenderBoxesForCurrentFrame()
         {
+            if (IsLinking)
+                return;
+
             _imageCanvas.Children.Clear();
             foreach (Box box in _metadata.GetBoxesForFrame(_currentFrame))
             {

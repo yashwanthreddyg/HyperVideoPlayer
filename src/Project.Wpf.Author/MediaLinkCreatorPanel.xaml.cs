@@ -45,6 +45,8 @@ namespace Project.Wpf.Author
             this._linkedVideo.MediaManager = mm;
             this._projectVideo.LoadVideo(currentVideoPath);
             this._projectVideo._slider.Minimum = minFrame;
+            this._projectVideo.IsLinking = true;
+            this._linkedVideo.IsLinking = true;
             this.Width = 800;
             this.Height = 474;
         }
