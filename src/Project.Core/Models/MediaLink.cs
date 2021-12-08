@@ -32,6 +32,12 @@ namespace Project.Core.Models
             this.FinalHeight = finalHeight;
             this.ToVideo = toVideo;
             this.LinkName = linkName;
+            
+            TimeSpan time = TimeSpan.FromSeconds(FromFrame / 30.0);
+
+            //here backslash is must to tell that colon is
+            //not the part of format, it just a character that we want in output
+            this.FrameTime = time.ToString(@"mm\:ss");
         }
         public Guid Id { get; internal set; }
         public uint FromFrame { get; }
@@ -46,5 +52,6 @@ namespace Project.Core.Models
         public uint FinalWidth { get; }
         public String ToVideo { get; }
         public string LinkName { get; }
+        public string FrameTime { get; }
     }
 }

@@ -145,7 +145,8 @@ namespace Project.Wpf.Player
                 System.Windows.Shapes.Rectangle rect;
                 rect = new System.Windows.Shapes.Rectangle();
                 rect.Stroke = new SolidColorBrush(Colors.Red);
-                
+                rect.StrokeThickness = 5;
+
                 rect.Width = box.Width;
                 rect.Height = box.Height;
                 Canvas.SetLeft(rect, box.X);

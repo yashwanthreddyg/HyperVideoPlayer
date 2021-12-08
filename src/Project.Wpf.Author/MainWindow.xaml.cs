@@ -41,6 +41,7 @@ namespace Project.Wpf.Author
                     _mediaLinks = new List<MediaLink>(this._projectVideo._metadata.GetMediaLinks());
                     this._linkBox.ItemsSource = _mediaLinks;
                     this._linkBox.Items.Refresh();
+                    this.Title = dialog.SelectedPath;
                 }
             }
         }
@@ -80,7 +81,8 @@ namespace Project.Wpf.Author
         {
             if (_linkBox.SelectedItem != null)
             {
-                _projectVideo.SetFrame((_linkBox.SelectedItem as Core.Models.MediaLink).FromFrame);
+                var mediaLink = (_linkBox.SelectedItem as Core.Models.MediaLink);
+                _projectVideo.SetFrame(mediaLink.FromFrame, new Point(mediaLink.FromX, mediaLink.FromY));
             }   
         }
 
@@ -111,7 +113,7 @@ namespace Project.Wpf.Author
 
                 if (!_projectModified)
                 {
-                    this.Title += "\t*";
+                    this.Title += "*";
                 }
                 _projectModified = true;
             }
@@ -130,6 +132,12 @@ namespace Project.Wpf.Author
             _mediaLinks.Remove(_linkBox.SelectedItem as MediaLink);
             this._linkBox.Items.Refresh();
             _projectVideo.UpdateFrame();
+
+            if (!_projectModified)
+            {
+                this.Title += "*";
+            }
+            _projectModified = true;
         }
     }
 }

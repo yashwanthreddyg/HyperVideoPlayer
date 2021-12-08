@@ -20,11 +20,13 @@
                 <DataTemplate>
                     <Grid Margin="0,2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50" />
-                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding LinkName}" />
-                        <TextBlock Grid.Column="1" Text="{Binding Path=FromFrame}" Margin="118,0,-118,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding Path=FrameTime}" Margin="5,0,72,0" Grid.ColumnSpan="1" />
+                        <TextBlock Grid.Column="1" Text="{Binding Path=ToVideo}" Grid.ColumnSpan="2" Margin="50,0,-73,0"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

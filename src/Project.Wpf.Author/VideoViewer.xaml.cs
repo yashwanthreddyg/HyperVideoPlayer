@@ -51,6 +51,7 @@ namespace Project.Wpf.Author
                 System.Windows.Shapes.Rectangle rect;
                 rect = new System.Windows.Shapes.Rectangle();
                 rect.Stroke = new SolidColorBrush(Colors.Red);
+                rect.StrokeThickness = 5;
 
                 rect.Width = box.Width;
                 rect.Height = box.Height;
@@ -62,13 +63,31 @@ namespace Project.Wpf.Author
             }
         }
 
-        public void SetFrame(uint frame)
+        private void HighlightRectangle(Point origin)
+        {
+            foreach (Rectangle rect in _imageCanvas.Children)
+            {
+                int x = (int)Canvas.GetLeft(rect);
+                int y = (int)Canvas.GetTop(rect);
+
+                if (x == origin.X && y == origin.Y)
+                {
+                    rect.Stroke = new SolidColorBrush(Colors.DarkCyan);
+                }
+            }
+        }
+
+        public void SetFrame(uint frame, Point highlightedRectangleOrigin)
         {
             this._currentFrame = frame;
             this._slider.ValueChanged -= Slider_ValueChanged;
             this._slider.Value = _currentFrame;
             this._slider.ValueChanged += Slider_ValueChanged;
+
             UpdateFrame();
+
+            if (highlightedRectangleOrigin != null)
+                HighlightRectangle(highlightedRectangleOrigin);
         }
 
         public void UpdateFrame()
@@ -118,6 +137,7 @@ namespace Project.Wpf.Author
                 Rectangle rect;
                 rect = new Rectangle();
                 rect.Stroke = new SolidColorBrush(Colors.Red);
+                rect.StrokeThickness = 5;
 
                 rect.Width = Math.Abs(p.X - _origin.X);
                 rect.Height = Math.Abs(p.Y - _origin.Y);
