@@ -41,7 +41,7 @@ namespace Project.Wpf.Author
             this._slider.IsEnabled = true;
 
             UpdateFrame();
-            EnableControls();
+            UpdateControls();
         }
 
         private void RenderBoxesForCurrentFrame()
@@ -100,15 +100,23 @@ namespace Project.Wpf.Author
             RenderBoxesForCurrentFrame();
         }
 
-        private void EnableControls()
+        private void UpdateControls()
         {
             this._slider.IsEnabled = true;
+            this.BackwardButton.IsEnabled = true;
+            this.ForwardButton.IsEnabled = true;
+
+            if (this._currentFrame <= 1)
+                this.BackwardButton.IsEnabled = false;
+            if (this._currentFrame == _metadata.GetFrameCount())
+                this.ForwardButton.IsEnabled= false;
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             this._currentFrame = (uint)Math.Round(e.NewValue);
             UpdateFrame();
+            UpdateControls();
         }
 
         private void _imageCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -152,11 +160,16 @@ namespace Project.Wpf.Author
                 Panel.SetZIndex(rect, 5);
                 lastRectangle = rect;
             }
+        }        
+
+        private void Forward_Click(object sender, RoutedEventArgs e)
+        {
+            this._slider.Value = Math.Min(this._slider.Value + 10, _metadata.GetFrameCount());
         }
 
-        private void _imageCanvas_MouseLeftButtonUp(object sender, MouseEventArgs e)
+        private void Backward_Click(object sender, RoutedEventArgs e)
         {
-
+            this._slider.Value = Math.Max(this._slider.Value - 10, 1);
         }
     }
 }

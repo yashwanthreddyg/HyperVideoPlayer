@@ -6,8 +6,10 @@
              xmlns:local="clr-namespace:Project.Wpf.Author"
              mc:Ignorable="d" d:DesignWidth="352" Width="352" Height="364">
     <Canvas>
-        <Slider x:Name="_slider" Width="332" Canvas.Left="10" Canvas.Top="327" IsEnabled="False" ValueChanged="Slider_ValueChanged"/>
+        <Slider x:Name="_slider" Width="292" Canvas.Left="30" Canvas.Top="330" IsEnabled="False" ValueChanged="Slider_ValueChanged"/>
         <Image x:Name="_imageWindow" Width="352" Height="288" MouseLeftButtonDown="_imageCanvas_MouseLeftButtonDown" MouseLeftButtonUp="_imageCanvas_MouseLeftButtonUp" MouseMove="_imageCanvas_MouseMove" MouseUp="_imageCanvas_MouseLeftButtonUp"/>
         <Canvas x:Name="_imageCanvas" Height="288" Width="352"/>
+        <Button x:Name="ForwardButton" Content="&gt;&gt;" Canvas.Left="327" Canvas.Top="328" Width="20" Click="Forward_Click" IsEnabled="False"/>
+        <Button x:Name="BackwardButton" Content="&lt;&lt;" Canvas.Top="328" Width="20" Canvas.Left="4" Click="Backward_Click" IsEnabled="False"/>
     </Canvas>
 </UserControl>
