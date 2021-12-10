@@ -32,6 +32,7 @@ namespace Project.Core.Models
             this.FinalHeight = finalHeight;
             this.ToVideo = toVideo;
             this.LinkName = linkName;
+            this.LinkedFrame = linkedFrame;
             
             TimeSpan time = TimeSpan.FromSeconds(FromFrame / 30.0);
 
