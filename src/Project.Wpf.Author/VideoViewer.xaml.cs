@@ -168,12 +168,12 @@ namespace Project.Wpf.Author
 
         private void Forward_Click(object sender, RoutedEventArgs e)
         {
-            this._slider.Value = Math.Min(this._slider.Value + 10, _metadata.GetFrameCount());
+            this._slider.Value = Math.Min(this._slider.Value + 1, _metadata.GetFrameCount());
         }
 
         private void Backward_Click(object sender, RoutedEventArgs e)
         {
-            this._slider.Value = Math.Max(this._slider.Value - 10, 1);
+            this._slider.Value = Math.Max(this._slider.Value - 1, 1);
         }
     }
 }
