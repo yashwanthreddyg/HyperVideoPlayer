@@ -40,13 +40,13 @@ namespace Project.Wpf.Author
         public MediaLinkCreatorPanel(String currentVideoPath, uint minFrame, MediaManager mm)
         {
             InitializeComponent();
+            this._projectVideo.IsLinking = true;
+            this._linkedVideo.IsLinking = true;
             this.MediaManager = mm;
             this._projectVideo.MediaManager = mm;
             this._linkedVideo.MediaManager = mm;
             this._projectVideo.LoadVideo(currentVideoPath);
             this._projectVideo._slider.Minimum = minFrame;
-            this._projectVideo.IsLinking = true;
-            this._linkedVideo.IsLinking = true;
             this.Width = 800;
             this.Height = 474;
         }

@@ -45,11 +45,15 @@ namespace Project.Wpf.Author
         }
 
         private void RenderBoxesForCurrentFrame()
-        {
+        {   
             if (IsLinking)
+            {
+                _imageCanvas.Children.Clear();
                 return;
+            }
 
             _imageCanvas.Children.Clear();
+
             foreach (Box box in _metadata.GetBoxesForFrame(_currentFrame))
             {
                 System.Windows.Shapes.Rectangle rect;
