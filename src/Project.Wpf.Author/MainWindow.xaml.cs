@@ -69,7 +69,7 @@ namespace Project.Wpf.Author
             }
             else
             {
-                var mediaLink = new Core.Models.MediaLink(_projectVideo._currentFrame, result.destFrame, (uint)_projectVideo._origin.X, result.destX, (uint)_projectVideo._origin.Y, result.destY, (uint)_projectVideo.lastRectangle.Height, result.destHeight, (uint)_projectVideo.lastRectangle.Width, result.destWidth, result.linkedFile, result.linkName);
+                var mediaLink = new Core.Models.MediaLink(_projectVideo._currentFrame, result.destFrame, (uint)_projectVideo._origin.X, result.destX, (uint)_projectVideo._origin.Y, result.destY, (uint)_projectVideo.lastRectangle.Height, result.destHeight, (uint)_projectVideo.lastRectangle.Width, result.destWidth, result.linkedFile, result.linkedFrame, result.linkName);
                 _projectVideo._metadata.AddMediaLink(mediaLink);
                 //_mediaLinks.Add(new LinkInfo() { LinkName = mediaLink.LinkName});
                 _mediaLinks.Add(mediaLink);
@@ -106,7 +106,7 @@ namespace Project.Wpf.Author
             }
             else
             {
-                var mediaLink = new Core.Models.MediaLink(_projectVideo._currentFrame, result.linkedFrame, (uint)_projectVideo._origin.X, result.destX, (uint)_projectVideo._origin.Y, result.destY, (uint)_projectVideo.lastRectangle.Height, result.destHeight, (uint)_projectVideo.lastRectangle.Width, result.destWidth, result.linkedFile, result.linkName);
+                var mediaLink = new Core.Models.MediaLink(_projectVideo._currentFrame, result.destFrame, (uint)_projectVideo._origin.X, result.destX, (uint)_projectVideo._origin.Y, result.destY, (uint)_projectVideo.lastRectangle.Height, result.destHeight, (uint)_projectVideo.lastRectangle.Width, result.destWidth, result.linkedFile, result.linkedFrame, result.linkName);
                 _projectVideo._metadata.AddMediaLink(mediaLink);
                 _mediaLinks.Add(mediaLink);
                 this._linkBox.Items.Refresh();

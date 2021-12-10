@@ -233,7 +233,7 @@ namespace Project.Wpf.Player
             {
                 if (IsBoundedByBox(p, box))
                 {
-                    LoadVideo(box.MediaLink.ToVideo, box.MediaLink.ToFrame);
+                    LoadVideo(box.MediaLink.ToVideo, box.MediaLink.LinkedFrame);
                     return;
                 }
             }
